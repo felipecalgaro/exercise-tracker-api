@@ -1,7 +1,7 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
-import { Day } from "./entity/Day"
-import { Exercise } from "./entity/Exercise"
+import { Day } from "../entity/Day"
+import { Exercise } from "../entity/Exercise"
 
 export const AppDataSource = new DataSource({
     type: "postgres",

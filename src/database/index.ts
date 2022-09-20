@@ -1,6 +1,6 @@
 import { AppDataSource } from "./data-source"
-import { Day } from "./entity/Day"
-import { Exercise } from "./entity/Exercise"
+import { Day } from "../entity/Day"
+import { Exercise } from "../entity/Exercise"
 
 AppDataSource.initialize()
     .then(async () => {
