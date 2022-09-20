@@ -19,6 +19,9 @@ export class Day {
   @UpdateDateColumn()
   updatedAt: Date
 
+  @Column({ default: Date.now() })
+  date: Date
+
   @ManyToOne(() => Exercise, (exercise) => exercise.days)
   exercise: Exercise
 }
