@@ -12,7 +12,7 @@ export const AppDataSource = new DataSource({
     database: "exercise_tracker",
     synchronize: true,
     logging: false,
-    entities: ['src/entity'],
+    entities: [Exercise, Day],
     migrations: ['src/migration'],
     subscribers: [],
 })
