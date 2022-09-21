@@ -34,6 +34,33 @@ router.post('/day/:exerciseId', async (req, res) => {
 
     res.send(exercise)
   } catch (error) {
+    res.status(400)
+    console.log(error)
+  } finally {
+    await AppDataSource.destroy()
+  }
+})
+
+router.put('/day/:id', async (req, res) => {
+  const { id } = req.params
+  const { date, weight, repetitions } = req.body
+
+  try {
+    await AppDataSource.initialize()
+
+    const day = await AppDataSource.manager.findOne(Day, {
+      where: {
+        id
+      }
+    })
+
+    if (date) day.date = date
+    if (repetitions) day.repetitions = repetitions
+    if (weight) day.weight = weight
+    await AppDataSource.manager.save(day)
+    res.send(day)
+  } catch (error) {
+    res.status(400)
     console.log(error)
   } finally {
     await AppDataSource.destroy()
