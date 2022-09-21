@@ -26,8 +26,8 @@ router.get('/exercises', async (req, res) => {
   }
 })
 
-router.get('/exercises/:id', async (req, res) => {
-  const { id } = req.params
+router.get('/exercises/:name', async (req, res) => {
+  const { name } = req.params
 
   try {
     await AppDataSource.initialize()
@@ -37,7 +37,7 @@ router.get('/exercises/:id', async (req, res) => {
         days: true
       },
       where: {
-        id
+        name
       }
     })
 
@@ -77,6 +77,50 @@ router.post('/exercises', async (req, res) => {
   } catch (err) {
     res.status(400)
     console.log(err)
+  } finally {
+    await AppDataSource.destroy()
+  }
+})
+
+router.delete('/exercises/:id', async (req, res) => {
+  const { id } = req.params
+
+  try {
+    await AppDataSource.initialize()
+
+    const exercise = await AppDataSource.manager.findOne(Exercise, {
+      relations: {
+        days: true
+      },
+      where: {
+        id
+      }
+    })
+
+    const days = await AppDataSource.manager.find(Day, {
+      where: {
+        exercise
+      }
+    })
+
+    days.forEach(async () => {
+      await AppDataSource
+        .createQueryBuilder()
+        .delete()
+        .from(Day)
+        .execute()
+    })
+
+    await AppDataSource
+      .createQueryBuilder()
+      .delete()
+      .from(Exercise)
+      .where("id = :id", { id })
+      .execute()
+
+    res.send('Successfully deleted!')
+  } catch (error) {
+    console.log(error)
   } finally {
     await AppDataSource.destroy()
   }
