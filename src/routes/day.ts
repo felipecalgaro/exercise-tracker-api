@@ -67,4 +67,25 @@ router.put('/day/:id', async (req, res) => {
   }
 })
 
+router.delete('/day/:id', async (req, res) => {
+  const { id } = req.params
+
+  try {
+    await AppDataSource.initialize()
+
+    await AppDataSource
+      .createQueryBuilder()
+      .delete()
+      .from(Day)
+      .where("id = :id", { id })
+      .execute()
+
+    res.status(200)
+  } catch (error) {
+    console.log(error)
+  } finally {
+    await AppDataSource.destroy()
+  }
+})
+
 export { router }
