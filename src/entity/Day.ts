@@ -22,6 +22,6 @@ export class Day {
   @Column({ default: new Date() })
   date: Date
 
-  @ManyToOne(() => Exercise, (exercise) => exercise.days)
+  @ManyToOne(() => Exercise, (exercise) => exercise.days, { onDelete: "CASCADE" })
   exercise: Exercise
 }
