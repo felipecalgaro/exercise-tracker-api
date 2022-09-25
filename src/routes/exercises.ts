@@ -88,35 +88,9 @@ router.delete('/exercises/:id', async (req, res) => {
   try {
     await AppDataSource.initialize()
 
-    const exercise = await AppDataSource.manager.findOne(Exercise, {
-      relations: {
-        days: true
-      },
-      where: {
-        id
-      }
+    await AppDataSource.manager.delete(Exercise, {
+      id
     })
-
-    const days = await AppDataSource.manager.find(Day, {
-      where: {
-        exercise
-      }
-    })
-
-    days.forEach(async () => {
-      await AppDataSource
-        .createQueryBuilder()
-        .delete()
-        .from(Day)
-        .execute()
-    })
-
-    await AppDataSource
-      .createQueryBuilder()
-      .delete()
-      .from(Exercise)
-      .where("id = :id", { id })
-      .execute()
 
     res.send('Successfully deleted!')
   } catch (error) {
