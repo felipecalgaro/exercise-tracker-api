@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.use(express.json())
 
-router.get('/exercises', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     await AppDataSource.initialize()
 
@@ -26,7 +26,7 @@ router.get('/exercises', async (req, res) => {
   }
 })
 
-router.get('/exercises/:name', async (req, res) => {
+router.get('/:name', async (req, res) => {
   const { name } = req.params
 
   try {
@@ -50,7 +50,7 @@ router.get('/exercises/:name', async (req, res) => {
   }
 })
 
-router.post('/exercises', async (req, res) => {
+router.post('/', async (req, res) => {
   const { name } = req.body.exercise
   const { weight, repetitions, date } = req.body.day
 
@@ -62,7 +62,6 @@ router.post('/exercises', async (req, res) => {
     day.repetitions = repetitions
     day.weight = weight
     await AppDataSource.manager.save(day)
-    console.log(day);
 
     const exercise = new Exercise()
     exercise.name = name
@@ -82,7 +81,7 @@ router.post('/exercises', async (req, res) => {
   }
 })
 
-router.delete('/exercises/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   const { id } = req.params
 
   try {
@@ -92,7 +91,7 @@ router.delete('/exercises/:id', async (req, res) => {
       id
     })
 
-    res.send('Successfully deleted!')
+    res.status(200)
   } catch (error) {
     console.log(error)
   } finally {

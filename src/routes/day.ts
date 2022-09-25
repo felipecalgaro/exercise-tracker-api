@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.use(express.json())
 
-router.post('/day/:exerciseId', async (req, res) => {
+router.post('/:exerciseId', async (req, res) => {
   const { exerciseId } = req.params
   const { weight, repetitions, date } = req.body
 
@@ -41,7 +41,7 @@ router.post('/day/:exerciseId', async (req, res) => {
   }
 })
 
-router.put('/day/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
   const { id } = req.params
   const { date, weight, repetitions } = req.body
 
@@ -67,7 +67,7 @@ router.put('/day/:id', async (req, res) => {
   }
 })
 
-router.delete('/day/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   const { id } = req.params
 
   try {
