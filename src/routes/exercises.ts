@@ -91,9 +91,12 @@ router.delete('/:id', async (req, res) => {
       id
     })
 
-    res.status(200)
+    const exercises = await AppDataSource.manager.find(Exercise, { relations: { days: true } })
+
+    res.json(exercises)
   } catch (error) {
     console.log(error)
+    res.status(400)
   } finally {
     await AppDataSource.destroy()
   }
