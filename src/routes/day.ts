@@ -7,8 +7,8 @@ const router = express.Router()
 
 router.use(express.json())
 
-router.post('/:exerciseName', async (req, res) => {
-  const { exerciseName } = req.params
+router.post('/:exerciseId', async (req, res) => {
+  const { exerciseId } = req.params
   const { weight, repetitions, date } = req.body
 
   try {
@@ -25,7 +25,7 @@ router.post('/:exerciseName', async (req, res) => {
         days: true
       },
       where: {
-        name: exerciseName
+        id: exerciseId
       }
     })
 
