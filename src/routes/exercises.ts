@@ -26,8 +26,8 @@ router.get('/', async (req, res) => {
   }
 })
 
-router.get('/:name', async (req, res) => {
-  const { name } = req.params
+router.get('/:id', async (req, res) => {
+  const { id } = req.params
 
   try {
     await AppDataSource.initialize()
@@ -37,7 +37,7 @@ router.get('/:name', async (req, res) => {
         days: true
       },
       where: {
-        name
+        id
       }
     })
 
@@ -58,7 +58,7 @@ router.post('/', async (req, res) => {
     await AppDataSource.initialize()
 
     const day = new Day()
-    if (date) day.date = date // remove when developing client side
+    day.date = date
     day.repetitions = repetitions
     day.weight = weight
     await AppDataSource.manager.save(day)

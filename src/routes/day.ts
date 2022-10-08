@@ -7,8 +7,8 @@ const router = express.Router()
 
 router.use(express.json())
 
-router.post('/:exerciseId', async (req, res) => {
-  const { exerciseId } = req.params
+router.post('/:exerciseName', async (req, res) => {
+  const { exerciseName } = req.params
   const { weight, repetitions, date } = req.body
 
   try {
@@ -17,7 +17,7 @@ router.post('/:exerciseId', async (req, res) => {
     const day = new Day()
     day.weight = weight
     day.repetitions = repetitions
-    if (date) day.date = date // remove when developing client side
+    day.date = date
     await AppDataSource.manager.save(day)
 
     const exercise = await AppDataSource.manager.findOne(Exercise, {
@@ -25,7 +25,7 @@ router.post('/:exerciseId', async (req, res) => {
         days: true
       },
       where: {
-        id: exerciseId
+        name: exerciseName
       }
     })
 
