@@ -67,8 +67,8 @@ router.put('/:id', async (req, res) => {
   }
 })
 
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params
+router.delete('/:exerciseId/:id', async (req, res) => {
+  const { id, exerciseId } = req.params
 
   try {
     await AppDataSource.initialize()
@@ -80,7 +80,16 @@ router.delete('/:id', async (req, res) => {
       .where("id = :id", { id })
       .execute()
 
-    res.status(200)
+    const exercise = await AppDataSource.manager.findOne(Exercise, {
+      where: {
+        id: exerciseId
+      },
+      relations: {
+        days: true
+      }
+    })
+
+    res.json(exercise)
   } catch (error) {
     console.log(error)
   } finally {
