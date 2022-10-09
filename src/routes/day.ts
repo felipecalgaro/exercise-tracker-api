@@ -43,7 +43,7 @@ router.post('/:exerciseId', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   const { id } = req.params
-  const { date, weight, repetitions } = req.body
+  const { weight, repetitions } = req.body
 
   try {
     await AppDataSource.initialize()
@@ -54,14 +54,12 @@ router.put('/:id', async (req, res) => {
       }
     })
 
-    if (date) day.date = date
     if (repetitions) day.repetitions = repetitions
     if (weight) day.weight = weight
     await AppDataSource.manager.save(day)
-    res.send(day)
+    res.json(day)
   } catch (error) {
     res.status(400)
-    console.log(error)
   } finally {
     await AppDataSource.destroy()
   }
