@@ -1,7 +1,16 @@
-# Awesome Project Build with TypeORM
+# 🌐 Exercise Tracker API
 
-Steps to run this project:
+### 📝 Objectives
+  
+ - Made for studying purposes 
+    - To try out a new ORM (TypeORM)
+    - To pratice own API development
 
-1. Run `npm i` command
-2. Setup database settings inside `data-source.ts` file
-3. Run `npm start` command
+### ⚙️ Technologies used
+
+- NodeJS
+  - Express
+  - CORS
+  - TypeScript
+- Postgres database
+- TypeORM
