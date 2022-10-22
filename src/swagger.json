@@ -1,0 +1,311 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Exercise Tracker API",
+    "description": "Connect the client with the database",
+    "contact": {
+      "email": "pipecalgaro@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3333/",
+      "description": "Development API"
+    }
+  ],
+  "paths": {
+    "/exercises": {
+      "get": {
+        "summary": "Get exercises",
+        "description": "Returns all exercises from database",
+        "tags": ["Exercises"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Exercise"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error while getting exercises"
+          }
+        }
+      },
+      "post": {
+        "summary": "Post exercise",
+        "description": "Add exercise to database",
+        "tags": ["Exercises"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Exercise"
+              },
+              "examples": {
+                "exercise": {
+                  "value": {
+                    "exercise": {
+                      "name": "Bench Press"
+                    },
+                    "day": {
+                      "weight": 20,
+                      "repetitions": 10,
+                      "date": "2022-10-22T15:18:40.178Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Exercise"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error while adding exercise"
+          }
+        }
+      }
+    },
+    "/exercises/{id}": {
+      "get": {
+        "summary": "Get single exercise",
+        "description": "Returns exercise by ID from database",
+        "tags": ["Exercises"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "exercise Id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Exercise"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error while getting exercise"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete exercise",
+        "description": "Deletes exercise by ID from database",
+        "tags": ["Exercises"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "exercise Id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Exercise"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error while deleting exercise"
+          }
+        }
+      }
+    },
+    "/days/{exerciseId}": {
+      "post": {
+        "summary": "Post day by exercise Id",
+        "description": "Add day to exercise by exercise Id",
+        "tags": ["Days"],
+        "parameters": [
+          {
+            "name": "exerciseId",
+            "in": "path",
+            "description": "exercise Id",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Day"
+              },
+              "examples": {
+                "day": {
+                  "value": {
+                    "weight": 22,
+                    "repetitions": 10,
+                    "date": "2022-10-22T15:18:40.178Z"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Exercise"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error while posting day"
+          }
+        }
+      }
+    },
+    "/days/{id}": {
+      "put": {
+        "summary": "Update day by Id",
+        "description": "Update day by Id",
+        "tags": ["Days"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "day Id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Day"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error while updating day"
+          }
+        }
+      }
+    },
+    "/days/{exerciseId}/{id}": {
+      "delete": {
+        "summary": "Delete day",
+        "description": "Deletes day by exercise Id and day Id from database",
+        "tags": ["Days"],
+        "parameters": [
+          {
+            "name": "exerciseId",
+            "in": "path",
+            "description": "exercise Id",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "day Id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Exercise"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error while deleting day"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Exercise": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "days": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Day"
+            }
+          }
+        }
+      },
+      "Day": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "number"
+          },
+          "repetitions": {
+            "type": "number"
+          },
+          "date": {
+            "type": "string"
+          },
+          "exercise": {
+            "type": "object",
+            "$ref": "#/components/schemas/Exercise"
+          }
+        }
+      }
+    }
+  }
+}
